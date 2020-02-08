@@ -1,0 +1,7 @@
+.MainRoute-div{
+    display: grid;
+    place-content: center center;
+    justify-items: center;
+    width: 100vw;
+    height: 100vh;
+}
