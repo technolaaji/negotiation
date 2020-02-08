@@ -7,6 +7,7 @@ import { JWT } from '../auth/jwt.interface';
 import * as moment from 'moment';
 import * as mongoose from 'mongoose';
 import { NegotiationModifyDto } from './dto/negotiation-modify.dto';
+import { SearchQueryDto } from './dto/search-type.dto';
 
 @Injectable()
 export class NegotiationService {
@@ -14,6 +15,37 @@ export class NegotiationService {
     @InjectModel('negotiation')
     private readonly negotiationModel: Model<Negotiation>,
   ) {}
+
+  async getNegotiation(negotiationQuery: SearchQueryDto, user: JWT) {
+    const { search } = negotiationQuery;
+    const { username } = user;
+    switch (search) {
+      case 'ACCEPT':
+        return await this.negotiationModel.find({
+          $or: [
+            { from: username, from_status: 'ACCEPT' },
+            { to: username, to_status: 'ACCEPT' },
+          ],
+        });
+      case 'DECLINE':
+        return await this.negotiationModel.find({
+          $or: [
+            { from: username, from_status: 'DECLINE' },
+            { to: username, to_status: 'DECLINE' },
+          ],
+        });
+      case 'PENDING':
+        return await this.negotiationModel.find({
+          from: username,
+          from_status: 'PENDING',
+        });
+      case 'ACTION_REQUIRED':
+        return await this.negotiationModel.find({
+          to: username,
+          to_status: 'ACTION_REQUIRED',
+        });
+    }
+  }
 
   async createNegotiation(negotiationRequest: NegotiationDto, user: JWT) {
     const { username } = user;

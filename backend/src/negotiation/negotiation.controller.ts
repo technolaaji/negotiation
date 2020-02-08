@@ -1,18 +1,39 @@
-import { Controller, Get, UseGuards, Req, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  UseGuards,
+  Post,
+  Body,
+  Query,
+  UsePipes,
+  ValidationPipe,
+  BadRequestException,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { NegotiationService } from './negotiation.service';
 import { NegotiationDto } from './dto/negotiation-request.dto';
 import { JWT } from '../auth/jwt.interface';
 import { getUser } from '../auth/getUserDecorator';
 import { NegotiationModifyDto } from './dto/negotiation-modify.dto';
+import { SearchQueryDto } from './dto/search-type.dto';
 
 @Controller('negotiation')
 @UseGuards(AuthGuard('jwt'))
+@UsePipes(ValidationPipe)
 export class NegotiationController {
   constructor(private negotationService: NegotiationService) {}
 
+  @Get()
+  async getNegotiations(@Query() query: SearchQueryDto, @getUser() user: JWT) {
+    if (Object.keys(query).length) {
+      return this.negotationService.getNegotiation(query, user);
+    } else {
+      throw new BadRequestException('define a search type');
+    }
+  }
+
   @Post('/create')
-  async getNegotiations(
+  async createNegotiation(
     @Body() negotiationData: NegotiationDto,
     @getUser() user: JWT,
   ) {
