@@ -13,7 +13,7 @@ export default function DeclineSection() {
     const declineData = useSelector(state => state.declined.data);
 
     return (
-        <div>
+        <div className="ActionRequiredSection-div">
         { 
             declineData && declineData.map(item => {
                 return <AcceptOrDeclineBox key={item._id} name={item.to} price={item.price} status="DECLINE" time={item.timestamp} />

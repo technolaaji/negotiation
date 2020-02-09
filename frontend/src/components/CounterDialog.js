@@ -6,8 +6,22 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { counterNegotiation } from '../redux/actions/counterNegotiation';
+import { useAlert } from 'react-alert';
 
 export default function CounterDialog(props) {
+    const alert = useAlert();
+
+    const [price,updatePrice] = React.useState();
+
+    const handleChange = event => {
+        updatePrice(event.target.value);
+    }
+
+    const counterNeg = () => {
+        counterNegotiation(props.id,price,alert,props.handleClose);
+    }
+
     return (
         <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Counter a negotiation</DialogTitle>
@@ -23,14 +37,15 @@ export default function CounterDialog(props) {
             type="price"
             name="price"
             fullWidth
+            onChange={handleChange}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={props.handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={props.handleClose} color="primary">
-            Subscribe
+          <Button onClick={counterNeg} color="primary">
+            Counter
           </Button>
         </DialogActions>
       </Dialog>

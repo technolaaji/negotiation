@@ -16,7 +16,7 @@ export default function PendingSection() {
         <div className="PendingSection-div">
         {
             pendingData && pendingData.map(item => {
-                return <PendingBox key={item._id} name={item.to} price={item.price} time={item.timestamp} status={item.from_status} />
+                return <PendingBox key={item._id} id={item._id} name={item.to} price={item.price} time={item.timestamp} status={item.from_status} />
             })
         }
         {

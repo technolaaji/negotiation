@@ -5,9 +5,31 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import { useAlert } from 'react-alert';
+import { acceptNegotiation } from '../redux/actions/acceptNegotiation';
+import { declineNegotiation } from '../redux/actions/declineNegotiation';
 
 export default function AcceptOrDeclineDialog(props) {
     
+    const alert = useAlert();
+
+    const acceptNeg = () => {
+        acceptNegotiation(props.id,alert,props.handleClose);
+    }
+
+    const declineNeg = () => {
+        declineNegotiation(props.id,alert,props.handleClose);
+    }
+
+    const submitNeg = () => {
+        if(props.type === "accept"){
+            acceptNeg()
+        }
+        else {
+            declineNeg()
+        }
+    }
+
     return (
         <Dialog
         open={props.open}
@@ -25,7 +47,7 @@ export default function AcceptOrDeclineDialog(props) {
           <Button onClick={props.handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={props.handleClose} color="primary" autoFocus>
+          <Button onClick={submitNeg} color="primary" autoFocus>
             Proceed
           </Button>
         </DialogActions>

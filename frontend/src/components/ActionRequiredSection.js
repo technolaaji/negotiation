@@ -16,7 +16,7 @@ export default function PendingSection() {
         <div className="ActionRequiredSection-div">
         {
             requiredData && requiredData.map(item => {
-                return <ActionRequiredBox key={item._id} name={item.from} price={item.price} status="ACTION_REQUIRED" time={item.timestamp} />
+                return <ActionRequiredBox id={item._id} key={item._id} name={item.from} price={item.price} status="ACTION_REQUIRED" time={item.timestamp} />
             })
         }
         {

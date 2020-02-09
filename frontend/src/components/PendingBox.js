@@ -12,6 +12,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import * as moment from 'moment'
+import { useAlert } from 'react-alert';
+import { modifyNegotiation } from '../redux/actions/modifyNegotiation';
 
 const useStyles = makeStyles({
     root: {
@@ -21,6 +23,7 @@ const useStyles = makeStyles({
 
 export default function PendingBox(props) {
     const classes = useStyles();
+    const alert = useAlert();
 
     const [open, setOpen] = React.useState(false);
 
@@ -36,6 +39,10 @@ export default function PendingBox(props) {
 
   const updateNegotiationPrice = (e) => {
       updatePrice(e.target.value);
+  }
+
+  const modifyNeg = () => {
+      modifyNegotiation(props.id,price,alert,handleClose);
   }
 
   return (
@@ -82,7 +89,7 @@ export default function PendingBox(props) {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={modifyNeg} color="primary">
             Modify
           </Button>
         </DialogActions>

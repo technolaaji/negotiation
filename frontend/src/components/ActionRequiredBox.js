@@ -54,7 +54,7 @@ export default function ActionRequiredBox(props) {
             status: {props.status}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-          {moment(props.time).format('DD-MM-YYYY')}
+          time: {moment(props.time).format('DD-MM-YYYY')}
           </Typography>
         </CardContent>
      
@@ -70,9 +70,9 @@ export default function ActionRequiredBox(props) {
         </Button>
       </CardActions>
     </Card>
-    <AcceptOrDeclineDialog type={type} open={acceptOpen} handleClose={acceptToggle} />
-    <AcceptOrDeclineDialog type={type} open={declineOpen} handleClose={declineToggle} />
-    <CounterDialog open={counter} handleClose={counterToggle}  />
+    <AcceptOrDeclineDialog type={type} open={acceptOpen} handleClose={acceptToggle} id={props.id} />
+    <AcceptOrDeclineDialog type={type} open={declineOpen} handleClose={declineToggle} id={props.id} />
+    <CounterDialog open={counter} handleClose={counterToggle} id={props.id}  />
     </>
   );
 }

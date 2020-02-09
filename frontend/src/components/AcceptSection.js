@@ -13,7 +13,7 @@ export default function AcceptSection() {
     const acceptData = useSelector(state => state.accepted.data);
 
     return (
-        <div>
+        <div className="ActionRequiredSection-div">
         {
             acceptData && acceptData.map(item => {
                 return <AcceptOrDeclineBox key={item._id} name={item.to} price={item.price} status="ACCEPT" time={item.timestamp} />
