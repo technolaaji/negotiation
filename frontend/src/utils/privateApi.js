@@ -26,7 +26,7 @@ privateApi.interceptors.response.use(
     error => {
         if(error.response.status === 401){
             deleteToken();
-            navigate('/signin');
+            navigate('/');
             return Promise.reject(error);
         }
     }

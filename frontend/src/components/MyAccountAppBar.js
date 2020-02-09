@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -16,7 +16,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
+import { fetchUsers } from '../redux/actions/fetchUsers';
+import { useSelector } from 'react-redux';
+import { createNegotiation } from '../redux/actions/createNegotiation';
+import { useAlert } from 'react-alert';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -35,7 +38,14 @@ const useStyles = makeStyles(theme => ({
 
 export default function MyAccountAppBar() {
     const classes = useStyles();
+    const alert = useAlert();
     const [open, setOpen] = React.useState(false);
+
+    useEffect(() => {
+        fetchUsers();
+    }, []);
+
+    const userData = useSelector(state => state.user.data);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,11 +59,17 @@ export default function MyAccountAppBar() {
         deleteToken();
         navigate('/');
     }
-    const [age, setAge] = React.useState('');
+    const [selectedUser, updateSelectedUser] = React.useState('');
+
+    const [selectedPrice, updateSelectedPrice] = React.useState();
 
     const handleChange = event => {
-        setAge(event.target.value);
+        updateSelectedUser(event.target.value);
       };
+
+    const handlePriceChange = event => {
+        updateSelectedPrice(event.target.value);
+    }
 
       const [selectOpen, updateSelectOpen] = React.useState(false);
 
@@ -64,6 +80,10 @@ export default function MyAccountAppBar() {
       const handleSelectOpen = () => {
         updateSelectOpen(true);
       };
+
+    const createNeg = () => {
+        createNegotiation(selectedUser,selectedPrice,alert,handleClose);
+    }
 
   return (
     <div className={classes.root}>
@@ -89,17 +109,17 @@ export default function MyAccountAppBar() {
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"
           open={selectOpen}
-          value={age}
+          value={selectedUser}
           onChange={handleChange}
           onClose={handleSelectClose}
           onOpen={handleSelectOpen}
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+        {
+            userData && userData.map(item => {
+                return <MenuItem value={item} key={item}>{item}</MenuItem>
+            })
+        }
+          
         </Select>
       </FormControl>
           <TextField
@@ -110,13 +130,14 @@ export default function MyAccountAppBar() {
             label="price"
             type="price"
             fullWidth
+            onChange={handlePriceChange}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={createNeg} color="primary">
             Negotiate
           </Button>
         </DialogActions>

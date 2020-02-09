@@ -10,6 +10,7 @@ import { User } from './auth-user.interface';
 import { UserDto } from './dto/auth-user.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { JWT } from './jwt.interface';
 
 @Injectable()
 export class AuthService {
@@ -45,5 +46,17 @@ export class AuthService {
     } else {
       throw new BadRequestException();
     }
+  }
+
+  async getUsers(user: JWT) {
+    const { username } = user;
+    const users = await this.usermodel.find();
+    let payload = [];
+    users.map(item => {
+      if (item.username !== username) {
+        payload.push(item.username);
+      }
+    });
+    return payload;
   }
 }

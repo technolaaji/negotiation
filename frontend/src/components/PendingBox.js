@@ -11,6 +11,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import * as moment from 'moment'
 
 const useStyles = makeStyles({
     root: {
@@ -50,7 +51,7 @@ export default function PendingBox(props) {
             status: {props.status}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            time: {props.time}
+            time: {moment(props.time).format("DD-MM-YYYY")}
           </Typography>
         </CardContent>
      

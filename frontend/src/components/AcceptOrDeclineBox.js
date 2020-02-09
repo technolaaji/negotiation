@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import * as moment from 'moment'
 
 const useStyles = makeStyles({
     root: {
@@ -26,7 +27,7 @@ export default function AcceptOrDeclineBox(props) {
             
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-          time: {props.time}
+          time: {moment(props.time).format('DD-MM-YYYY')}
           </Typography>
         </CardContent>
     </Card>

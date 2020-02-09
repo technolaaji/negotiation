@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import AcceptOrDeclineDialog from './AcceptOrDeclineDialog';
 import CounterDialog from './CounterDialog';
+import * as moment from 'moment'
 
 const useStyles = makeStyles({
     root: {
@@ -53,7 +54,7 @@ export default function ActionRequiredBox(props) {
             status: {props.status}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            time: {props.time}
+          {moment(props.time).format('DD-MM-YYYY')}
           </Typography>
         </CardContent>
      
