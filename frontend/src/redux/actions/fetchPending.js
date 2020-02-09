@@ -3,6 +3,6 @@ import store from '../store';
 import pendingSlice from '../reducers/pendingReducer';
 
 export const fetchPending = async () => {
-    const response = await privateApi("http://localhost:4000/negotiation?search=PENDING");
+    const response = await privateApi("/negotiation?search=PENDING");
     store.dispatch(pendingSlice.actions.fetchPending(response.data))
 }

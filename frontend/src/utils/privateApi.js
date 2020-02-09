@@ -3,7 +3,7 @@ import { getToken, deleteToken } from './token';
 import { navigate } from '@reach/router';
 
 const privateApi = axios.create({
-    baseURL: "http://localhost:4000"
+    baseURL: "https://negotiationapp.herokuapp.com/"
 });
 
 privateApi.interceptors.request.use(

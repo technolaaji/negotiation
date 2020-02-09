@@ -8,7 +8,7 @@ const counterNeg = createAction('counter-negotiation');
 
 export const counterNegotiation = async (id,price,alert,close) => {
     try {
-        const response = await privateApi.post("http://localhost:4000/negotiation/counter",{
+        const response = await privateApi.post("/negotiation/counter",{
             "id": id,
             "price": parseFloat(price)
         });

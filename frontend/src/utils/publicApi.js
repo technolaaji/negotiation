@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const publicApi = axios.create({
-    baseURL: "http://localhost:4000"
+    baseURL: "https://negotiationapp.herokuapp.com/"
 });
 
 export default publicApi;

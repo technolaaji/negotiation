@@ -8,7 +8,7 @@ const declineNeg = createAction('decline-negotiation');
 
 export const declineNegotiation = async (id,alert,close) => {
     try {
-        const response = await privateApi.post("http://localhost:4000/negotiation/decline",{
+        const response = await privateApi.post("/negotiation/decline",{
             "id": id
         });
         if(response.status === 201){

@@ -7,7 +7,7 @@ const createNeg = createAction("create-negotiation");
 
 export const createNegotiation = async (to,price, alert,close) => {
     try {
-    let response = await privateApi.post("http://localhost:4000/negotiation/create",{
+    let response = await privateApi.post("/negotiation/create",{
         "to": to,
         "price": parseFloat(price)
     });
