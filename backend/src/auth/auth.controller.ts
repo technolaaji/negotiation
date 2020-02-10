@@ -1,3 +1,5 @@
+// this controller is responsible for the endpoints responsible for the authentication route
+
 import {
   Controller,
   Post,
@@ -14,7 +16,7 @@ import { getUser } from './getUserDecorator';
 import { JWT } from './jwt.interface';
 
 @Controller('auth')
-@UsePipes(ValidationPipe)
+@UsePipes(ValidationPipe) // used on the controller to check each value passed on
 export class AuthController {
   constructor(private authService: AuthService) {}
 
@@ -28,6 +30,7 @@ export class AuthController {
   }
 
   @Get('/users')
+  // this decorator is used for security issues where only authenticated users can retreive other usernaames to negotiate with
   @UseGuards(AuthGuard('jwt'))
   async getUsers(@getUser() user: JWT) {
     return this.authService.getUsers(user);

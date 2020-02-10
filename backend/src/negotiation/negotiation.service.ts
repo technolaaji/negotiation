@@ -13,12 +13,13 @@ import { SearchQueryDto } from './dto/search-type.dto';
 export class NegotiationService {
   constructor(
     @InjectModel('negotiation')
-    private readonly negotiationModel: Model<Negotiation>,
+    private readonly negotiationModel: Model<Negotiation>, // the negotiation model
   ) {}
 
   async getNegotiation(negotiationQuery: SearchQueryDto, user: JWT) {
-    const { search } = negotiationQuery;
-    const { username } = user;
+    const { search } = negotiationQuery; // query param from the url provided
+    const { username } = user; // the username fetched from the user block
+    // this switch case is responsible for what type of data will it will output based on the query param provided if satisfied
     switch (search) {
       case 'ACCEPT':
         return await this.negotiationModel.find({
@@ -102,7 +103,7 @@ export class NegotiationService {
 
     return modified;
   }
-
+  // only used for counter negotiations
   async archiveNegotiation(id: string) {
     const mongoId = new mongoose.mongo.ObjectID(id);
     await this.negotiationModel.findByIdAndUpdate(mongoId, {
@@ -110,7 +111,10 @@ export class NegotiationService {
       to_status: 'ARCHIVE',
     });
   }
-
+  // counter negotiations don't delete or modify an existing negotiation
+  // rather it labels it as ARCHIVE and creates a new one
+  // the old one is still there but doesn't appear on the site
+  // can be used later on to show what the user have negotiated with what prices
   async counterNegotiation(
     negotiationRequest: NegotiationModifyDto,
     user: JWT,

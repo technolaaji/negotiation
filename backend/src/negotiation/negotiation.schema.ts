@@ -1,3 +1,5 @@
+// the schema responsible for how the data will appear inside of the database
+
 import * as mongoose from 'mongoose';
 
 export const negotiationSchema = new mongoose.Schema({

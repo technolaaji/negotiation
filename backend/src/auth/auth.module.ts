@@ -1,3 +1,5 @@
+// the module responsible for importing and exporting modules
+
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
@@ -11,15 +13,15 @@ dotenv.config();
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: 'User', schema: userAuthSchema }]),
+    MongooseModule.forFeature([{ name: 'User', schema: userAuthSchema }]), // schema for the user type
     JwtModule.register({
-      secret: String(process.env.JWT),
-      signOptions: { expiresIn: '1hr' },
+      secret: String(process.env.JWT), // generate JWT tokens based on a long shuffled enviroment variable
+      signOptions: { expiresIn: '1hr' }, // for security reasons, a token doesn't exceed one hour of creation
     }),
-    PassportModule.register({ defaultStrategy: 'jwt' }),
+    PassportModule.register({ defaultStrategy: 'jwt' }), // module used for validation and JWT strategy
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
-  exports: [JwtStrategy, PassportModule],
+  exports: [JwtStrategy, PassportModule], // strategy is exported to be used in other modules as well
 })
 export class AuthModule {}

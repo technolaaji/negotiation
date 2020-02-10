@@ -1,3 +1,5 @@
+// this controller is responsible for the endpoints responsible for the negotation path
+
 import {
   Controller,
   Get,
@@ -18,13 +20,14 @@ import { NegotiationModifyDto } from './dto/negotiation-modify.dto';
 import { SearchQueryDto } from './dto/search-type.dto';
 
 @Controller('negotiation')
-@UseGuards(AuthGuard('jwt'))
-@UsePipes(ValidationPipe)
+@UseGuards(AuthGuard('jwt')) // ensures that this controller is guarded on each and every endpoint it has
+@UsePipes(ValidationPipe) // ensures validations with the help of dtos
 export class NegotiationController {
   constructor(private negotationService: NegotiationService) {}
 
   @Get()
   async getNegotiations(@Query() query: SearchQueryDto, @getUser() user: JWT) {
+    // if the query param is not empty
     if (Object.keys(query).length) {
       return this.negotationService.getNegotiation(query, user);
     } else {
@@ -54,7 +57,7 @@ export class NegotiationController {
   async modifyNegotiation(@Body() negotaitionData: NegotiationModifyDto) {
     return this.negotationService.modifyNegotiation(negotaitionData);
   }
-
+  // countering a negotiation is when you have a better price for this negotation
   @Post('/counter')
   async counterNegotiation(
     @Body() negotiationData: NegotiationModifyDto,

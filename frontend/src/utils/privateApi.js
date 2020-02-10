@@ -5,7 +5,7 @@ import { navigate } from '@reach/router';
 const privateApi = axios.create({
     baseURL: "https://negotiationapp.herokuapp.com/"
 });
-
+// this is used to put the token on axios to send it to every response
 privateApi.interceptors.request.use(
     config => {
         const token = getToken();
@@ -18,7 +18,7 @@ privateApi.interceptors.request.use(
         Promise.reject(error)
     }
 );
-
+// this interceptor is used to check if the token is expired then send the user to the homescreen
 privateApi.interceptors.response.use(
     response => {
         return response;

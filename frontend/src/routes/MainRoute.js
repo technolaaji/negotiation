@@ -5,7 +5,8 @@ import { checkToken } from '../utils/token';
 import { navigate } from "@reach/router"
 
 export default function MainRoute() {
-
+    // the set timeout is only used to give a feeling that the site is loading
+    // the token is found in the browser's memory but since it can be fetched instantly hence it doesn't provide a good user experience
     useEffect(() => {
         if(!checkToken()){
             setTimeout(() => {
